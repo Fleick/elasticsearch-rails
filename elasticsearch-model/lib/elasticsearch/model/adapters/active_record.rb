@@ -109,8 +109,13 @@ module Elasticsearch
           end
 
           def __transform
-            lambda { |model|  { index: { _id: model.id, data: model.__elasticsearch__.as_indexed_json } } }
+            lambda { |model|  { index: { _id: index_id(model), data: model.__elasticsearch__.as_indexed_json } } }
           end
+          
+          def index_id(model)
+            return model.index_id if model.respond_to?(:index_id)
+            
+            model.id
         end
       end
     end
