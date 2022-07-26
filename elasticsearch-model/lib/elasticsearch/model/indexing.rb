@@ -370,7 +370,7 @@ module Elasticsearch
         def index_document(options={})
           document = as_indexed_json
           request = { index: index_name,
-                      id:    id,
+                      id:    respond_to?(:index_id) ? index_id : id,
                       body:  document }
           request.merge!(type: document_type) if document_type
 
@@ -392,7 +392,7 @@ module Elasticsearch
         #
         def delete_document(options={})
           request = { index: index_name,
-                      id:    self.id }
+                      id:    respond_to?(:index_id) ? index_id : id }
           request.merge!(type: document_type) if document_type
 
           client.delete(request.merge!(options))
