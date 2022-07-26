@@ -116,6 +116,7 @@ module Elasticsearch
             return model.index_id if model.respond_to?(:index_id)
             
             model.id
+          end
         end
       end
     end
